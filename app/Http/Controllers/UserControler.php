@@ -37,7 +37,9 @@ class UserControler extends Controller
         return response()->json(['msg' => 'Akun berhasil dibuat', 'status' => true]);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
+        Auth::logout();
+        $request->session()->flush();
     }
 }
