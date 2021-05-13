@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KelasController;
 use App\Http\Controllers\UserControler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,4 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('login',        [UserControler::class, 'login'])->name('login');
+Route::post('login',            [UserControler::class, 'login']);
+Route::post('logout',           [UserControler::class, 'logout']);
+
+Route::get('kelas/show',        [KelasController::class, 'show']);
+Route::post('kelas/destroy',    [KelasController::class, 'destroy']);
+Route::post('kelas/update',     [KelasController::class, 'update']);
+Route::post('kelas/list',     [KelasController::class, 'index']);
+Route::resource('kelas', KelasController::class)->only(['store']);
