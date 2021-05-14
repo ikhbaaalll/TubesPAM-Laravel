@@ -52,15 +52,35 @@ class KelasController extends Controller
 
     public function show(Request $request)
     {
-        $kelas = Kelas::where('id', $request->id)->first();
+        $kelas = Kelas::with('user')->where('id', $request->id)->first();
+        $presensi = Absensi::with(['user' => function ($query) use ($kelas) {
+            $query->where('users.kelas', $kelas->user->kelas)
+                ->where('users.role', 2);
+        }])->where('kelas_id', $request->id)->get();
 
-        $response = array('kelas' => $kelas);
+        $response = array('kelas' => $kelas, 'presensi' => $presensi);
 
         return response()->json($response);
     }
 
     public function update(Request $request)
     {
+    }
+
+    public function status(Request $request)
+    {
+        Kelas::where('id', $request->id)
+            ->update(
+                [
+                    'status' => $request->status
+                ]
+            );
+
+        $status = Kelas::where('id', $request->id)->first();
+
+        $response = array('status' => $status);
+
+        return response()->json($response);
     }
 
     public function destroy(Request $request)
