@@ -23,8 +23,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login',            [UserControler::class, 'login']);
 Route::post('logout',           [UserControler::class, 'logout']);
 
-Route::get('kelas/show',        [KelasController::class, 'show']);
-Route::post('kelas/destroy',    [KelasController::class, 'destroy']);
-Route::post('kelas/update',     [KelasController::class, 'update']);
-Route::post('kelas/list',     [KelasController::class, 'index']);
+Route::post('kelas/show',           [KelasController::class, 'show']);
+Route::post('kelas/destroy',        [KelasController::class, 'destroy']);
+Route::post('kelas/update',         [KelasController::class, 'update']);
+Route::post('kelas/list',           [KelasController::class, 'index']);
+Route::post('kelas/status',         [KelasController::class, 'status']);
 Route::resource('kelas', KelasController::class)->only(['store']);
