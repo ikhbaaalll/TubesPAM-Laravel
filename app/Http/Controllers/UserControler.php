@@ -42,4 +42,19 @@ class UserControler extends Controller
         Auth::logout();
         $request->session()->flush();
     }
+
+    public function isAdmin(Request $request)
+    {
+        $user = User::where('id', $request->id)->first();
+
+        $role = 0;
+
+        if ($user->role == '1') {
+            $role = 1;
+        }
+
+        $response = array('role' => $role);
+
+        return response()->json($response);
+    }
 }
