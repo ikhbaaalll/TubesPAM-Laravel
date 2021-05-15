@@ -17,6 +17,7 @@ class CreateKelasTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('nama');
+            $table->integer('kelas');
             $table->string('pelajaran');
             $table->string('qr_code')->nullable();
             $table->date('tanggal');

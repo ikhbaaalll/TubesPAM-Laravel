@@ -13,6 +13,7 @@ class Kelas extends Model
         'user_id',
         'nama',
         'pelajaran',
+        'kelas',
         'qr_code',
         'tanggal',
         'waktu'
