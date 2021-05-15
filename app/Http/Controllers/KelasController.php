@@ -105,6 +105,31 @@ class KelasController extends Controller
         return response()->json($response);
     }
 
+    public function setPresensi(Request $request)
+    {
+        Absensi::where('id', $request->id)
+            ->update(
+                [
+                    'status' => $request->status
+                ]
+            );
+
+        $status = Absensi::where('id', $request->id)->first();
+
+        $response = array('status' => $status->status);
+
+        return response()->json($response);
+    }
+
+    public function getPresensi(Request $request)
+    {
+        $status = Absensi::where('id', $request->id)->first();
+
+        $response = array('status' => $status->status);
+
+        return response()->json($response);
+    }
+
     public function destroy(Request $request)
     {
         Kelas::where('id', $request->id)->delete();
