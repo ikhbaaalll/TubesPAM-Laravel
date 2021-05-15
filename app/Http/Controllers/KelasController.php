@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Absensi;
 use App\Models\Kelas;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,7 +13,8 @@ class KelasController extends Controller
 {
     public function index(Request $request)
     {
-        $kelas = Kelas::where('pelajaran', $request->pelajaran)->latest()->get();
+        $kelas = Kelas::where('pelajaran', $request->pelajaran)
+            ->where('kelas', $request->kelas)->latest()->get();
 
         return response()->json($kelas);
     }
@@ -24,6 +26,7 @@ class KelasController extends Controller
                 [
                     'user_id'       => $request->id,
                     'nama'          => $request->nama,
+                    'kelas'         => $request->kelas,
                     'pelajaran'     => $request->pelajaran,
                     'tanggal'       => $request->tanggal,
                     'waktu'         => $request->waktu,
@@ -58,7 +61,26 @@ class KelasController extends Controller
                 ->where('users.role', 2);
         }])->where('kelas_id', $request->id)->get();
 
-        $response = array('kelas' => $kelas, 'presensi' => $presensi);
+        $status = Absensi::where('kelas_id', $request->id)
+            ->where('user_id', $request->user)
+            ->first();
+
+        $statusKelas = '';
+        $waktu = $kelas->tanggal . ' ' . $kelas->waktu;
+
+        if (Carbon::now()->setTimezone('Asia/Jakarta')->format('Y-m-d H:i:s') > $waktu) {
+            $statusKelas = 1;
+        } else {
+            $statusKelas = 0;
+        }
+
+        if (!$status) {
+            $status = 0;
+        } else {
+            $status = $status->status;
+        }
+
+        $response = array('kelas' => $kelas, 'presensi' => $presensi, 'status' => $status, 'statusKelas' => $statusKelas);
 
         return response()->json($response);
     }
