@@ -23,12 +23,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login',            [UserControler::class, 'login']);
 Route::post('logout',           [UserControler::class, 'logout']);
 
+Route::post('user/index',           [UserControler::class, 'index']);
 Route::post('isadmin',              [UserControler::class, 'isAdmin']);
-Route::post('kelas/show',           [KelasController::class, 'show']);
-Route::post('kelas/destroy',        [KelasController::class, 'destroy']);
-Route::post('kelas/update',         [KelasController::class, 'update']);
-Route::post('kelas/list',           [KelasController::class, 'index']);
-Route::post('kelas/status',         [KelasController::class, 'status']);
-Route::post('kelas/get/presensi',         [KelasController::class, 'getPresensi']);
-Route::post('kelas/update/presensi',         [KelasController::class, 'setPresensi']);
-Route::resource('kelas', KelasController::class)->only(['store']);
+Route::post('user/store',           [UserControler::class, 'register']);
+Route::post('user/update',          [UserControler::class, 'update']);
+Route::post('user/destroy',         [UserControler::class, 'destroy']);
+
+Route::post('kelas/show',               [KelasController::class, 'show']);
+Route::post('kelas/destroy',            [KelasController::class, 'destroy']);
+Route::post('kelas/update',             [KelasController::class, 'update']);
+Route::post('kelas/list',               [KelasController::class, 'index']);
+Route::post('kelas/status',             [KelasController::class, 'status']);
+Route::post('kelas/get/presensi',       [KelasController::class, 'getPresensi']);
+Route::post('kelas/update/presensi',    [KelasController::class, 'setPresensi']);
+Route::post('kelas',                    [KelasController::class, 'store']);
