@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 class UserControler extends Controller
 {
+    public function index(Request $request)
+    {
+        $users = User::where('kelas', $request->kelas)->where('role', 2)->latest()->get();
+
+        return response()->json($users);
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->only(['email', 'password']);
@@ -23,18 +30,48 @@ class UserControler extends Controller
 
     public function register(Request $request)
     {
-        $request->validate(
-            [
-                'nama'      => ['required'],
-                'email'     => ['required', 'email', 'unique:users,email'],
-                'password'  => ['required'],
-                'kelas'     => ['required', 'numeric', 'min:1', 'max:6'],
-            ]
-        );
+        $error = 'Email telah digunakan';
 
-        $user = User::create($request->validated());
+        $email = User::where('email', $request->email)->first();
 
-        return response()->json(['msg' => 'Akun berhasil dibuat', 'status' => true]);
+        if (!$email) {
+            User::create(
+                [
+                    'nama'      => $request->nama,
+                    'email'     => $request->email,
+                    'password'  => bcrypt($request->password),
+                    'kelas'     => $request->kelas
+                ]
+            );
+            $error = null;
+        }
+
+        $response = array('error' => $error);
+
+        return response()->json($response);
+    }
+
+    public function update(Request $request)
+    {
+        $error = 'Email telah digunakan';
+
+        $email = User::where('id', $request->id)->where('email', $request->email)->first();
+
+        if ($email) {
+            User::where('id', $request->id)->update(
+                [
+                    'nama'      => $request->nama,
+                    'email'     => $request->email,
+                    'password'  => bcrypt($request->password),
+                    'kelas'     => $request->kelas
+                ]
+            );
+            $error = null;
+        }
+
+        $response = array('error' => $error);
+
+        return response()->json($response);
     }
 
     public function logout(Request $request)
@@ -56,5 +93,12 @@ class UserControler extends Controller
         $response = array('role' => $role);
 
         return response()->json($response);
+    }
+
+    public function destroy(Request $request)
+    {
+        User::where('id', $request->id)->delete();
+
+        return response()->json("Sukses", 200);
     }
 }
