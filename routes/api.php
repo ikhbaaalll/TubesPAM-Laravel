@@ -31,7 +31,6 @@ Route::post('user/destroy',         [UserControler::class, 'destroy']);
 
 Route::post('kelas/show',               [KelasController::class, 'show']);
 Route::post('kelas/destroy',            [KelasController::class, 'destroy']);
-Route::post('kelas/update',             [KelasController::class, 'update']);
 Route::post('kelas/list',               [KelasController::class, 'index']);
 Route::post('kelas/status',             [KelasController::class, 'status']);
 Route::post('kelas/get/presensi',       [KelasController::class, 'getPresensi']);
