@@ -130,35 +130,35 @@ class UserControler extends Controller
 
             'presensiMatematika' => $presensiMatematika,
             'absenMatematika' => $totalMatematika - $presensiMatematika,
-            'persentaseMatematika' => $presensiMatematika / $totalMatematika * 100,
+            'persentaseMatematika' => $presensiMatematika != 0 ? $presensiMatematika / $totalMatematika * 100 : 0,
 
             'presensiBahasaInggris' => $presensiBahasaInggris,
             'absenBahasaInggris' => $totalBahasaInggris - $presensiBahasaInggris,
-            'presentaseBahasaInggris' => $presensiBahasaInggris / $totalBahasaInggris * 100,
+            'presentaseBahasaInggris' => $presensiBahasaInggris != 0 ? $presensiBahasaInggris / $totalBahasaInggris * 100 : 0,
 
             'presensiBahasaIndonesia' => $presensiBahasaIndonesia,
             'absenBahasaIndonesia' => $totalBahasaIndonesia - $presensiBahasaIndonesia,
-            'presentaseBahasaIndonesia' => $presensiBahasaIndonesia / $totalBahasaIndonesia * 100,
+            'presentaseBahasaIndonesia' => $presensiBahasaIndonesia != 0 ? $presensiBahasaIndonesia / $totalBahasaIndonesia * 100 : 0,
 
             'presensiIpa' => $presensiIpa,
             'absenIpa' => $totalIpa - $presensiIpa,
-            'presentaseIpa' => $presensiIpa / $totalIpa * 100,
+            'presentaseIpa' => $presensiIpa != 0 ? $presensiIpa / $totalIpa * 100 : 0,
 
             'presensiIps' => $presensiIps,
             'absenIps' => $totalIps - $presensiIps,
-            'presentaseIps' => $presensiIps / $totalIps * 100,
+            'presentaseIps' => $presensiIps != 0 ? $presensiIps / $totalIps * 100 : 0,
 
             'presensiSeni' => $presensiSeni,
             'absenSeni' => $totalSeni - $presensiSeni,
-            'presentaseSeni' => $presensiSeni / $totalSeni * 100,
+            'presentaseSeni' => $presensiSeni != 0 ? $presensiSeni / $totalSeni * 100 : 0,
 
             'presensiPkn' => $presensiPkn,
             'absenPkn' => $totalPkn - $presensiPkn,
-            'presentasePkn' => $presensiPkn / $totalPkn * 100,
+            'presentasePkn' => $presensiPkn != 0 ? $presensiPkn / $totalPkn * 100 : 0,
 
             'presensiOlahraga' => $presensiOlahraga,
             'absenOlahraga' => $totalOlahraga - $presensiOlahraga,
-            'presentaseOlahraga' => $presensiOlahraga / $totalOlahraga * 100,
+            'presentaseOlahraga' => $presensiOlahraga != 0 ? $presensiOlahraga / $totalOlahraga * 100 : 0,
         );
 
         return response()->json($response, 201);
