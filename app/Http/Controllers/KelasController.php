@@ -61,10 +61,7 @@ class KelasController extends Controller
     public function show(Request $request)
     {
         $kelas = Kelas::with('user')->where('id', $request->id)->first();
-        $presensi = Absensi::with(['user' => function ($query) use ($kelas) {
-            $query->where('users.kelas', $kelas->user->kelas)
-                ->where('users.role', 2);
-        }])->where('kelas_id', $request->id)->get();
+        $presensi = Absensi::with('user')->where('kelas_id', $request->id)->get();
 
         $status = Absensi::where('kelas_id', $request->id)
             ->where('user_id', $request->user)
@@ -108,6 +105,26 @@ class KelasController extends Controller
         $response = array('status' => $status);
 
         return response()->json($response);
+    }
+
+    public function presensiSiswa(Request $request)
+    {
+        $data = false;
+
+        $kelas = Kelas::where('id', $request->id)->first();
+
+        if ($kelas->status != '0') {
+            Absensi::where('user_id', $request->user)
+                ->where('kelas_id', $request->id)
+                ->update(
+                    [
+                        'status' => '1'
+                    ]
+                );
+            $data = true;
+        }
+
+        return response()->json($data, 200);
     }
 
     public function setPresensi(Request $request)
