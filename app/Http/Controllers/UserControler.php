@@ -125,6 +125,9 @@ class UserControler extends Controller
             ->where('status', 1)
             ->count();
 
+        $totalPresensi = $presensiSeni + $presensiPkn + $presensiOlahraga + $presensiMatematika + $presensiIps + $presensiIpa + $presensiBahasaInggris + $presensiBahasaIndonesia;
+        $total = $totalPkn + $totalOlahraga + $totalMatematika + $totalIps + $totalIpa + $totalBahasaInggris + $totalBahasaIndonesia + $totalSeni;
+
         $response = array(
             'user' => $user,
 
@@ -159,6 +162,9 @@ class UserControler extends Controller
             'presensiOlahraga' => $presensiOlahraga,
             'absenOlahraga' => $totalOlahraga - $presensiOlahraga,
             'presentaseOlahraga' => $presensiOlahraga != 0 ? $presensiOlahraga / $totalOlahraga * 100 : 0,
+
+            'totalPresensi' => $totalPresensi,
+            'totalPresentasi' => $totalPresensi != 0 ? $totalPresensi / $total * 100 : 0
         );
 
         return response()->json($response, 201);
