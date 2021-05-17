@@ -29,10 +29,10 @@ Route::post('user/store',           [UserControler::class, 'register']);
 Route::post('user/update',          [UserControler::class, 'update']);
 Route::post('user/destroy',         [UserControler::class, 'destroy']);
 
+Route::post('kelas',                    [KelasController::class, 'store']);
 Route::post('kelas/show',               [KelasController::class, 'show']);
 Route::post('kelas/destroy',            [KelasController::class, 'destroy']);
 Route::post('kelas/list',               [KelasController::class, 'index']);
 Route::post('kelas/status',             [KelasController::class, 'status']);
 Route::post('kelas/get/presensi',       [KelasController::class, 'getPresensi']);
 Route::post('kelas/update/presensi',    [KelasController::class, 'setPresensi']);
-Route::post('kelas',                    [KelasController::class, 'store']);
