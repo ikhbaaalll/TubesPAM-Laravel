@@ -35,7 +35,7 @@ class KelasController extends Controller
                 ]
             );
 
-            QRCode::text($kelas->id)->setOutfile($kelas->id . '.png')->png();
+            QRCode::text($kelas->id)->setOutfile(secure_asset($kelas->id . '.png')->png();
 
             Kelas::where('id', $kelas->id)->update(['qr_code' => secure_asset($kelas->id . '.png')]);
 
