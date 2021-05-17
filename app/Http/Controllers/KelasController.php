@@ -80,7 +80,7 @@ class KelasController extends Controller
             $statusKelas = 0;
         }
 
-        if ($status->status == '0') {
+        if (!$status || $status->status == '0') {
             $status = 0;
         } else {
             $status = $status->status;
