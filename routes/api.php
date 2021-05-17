@@ -24,6 +24,7 @@ Route::post('login',            [UserControler::class, 'login']);
 Route::post('logout',           [UserControler::class, 'logout']);
 
 Route::post('user/index',           [UserControler::class, 'index']);
+Route::post('user/show',            [UserControler::class, 'show']);
 Route::post('isadmin',              [UserControler::class, 'isAdmin']);
 Route::post('user/store',           [UserControler::class, 'register']);
 Route::post('user/update',          [UserControler::class, 'update']);
