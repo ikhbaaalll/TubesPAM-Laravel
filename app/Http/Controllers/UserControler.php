@@ -164,6 +164,7 @@ class UserControler extends Controller
             'presentaseOlahraga' => $presensiOlahraga != 0 ? $presensiOlahraga / $totalOlahraga * 100 : 0,
 
             'totalPresensi' => $totalPresensi,
+            'total' => $total,
             'totalPresentasi' => $totalPresensi != 0 ? $totalPresensi / $total * 100 : 0
         );
 
