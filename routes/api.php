@@ -36,3 +36,4 @@ Route::post('kelas/list',               [KelasController::class, 'index']);
 Route::post('kelas/status',             [KelasController::class, 'status']);
 Route::post('kelas/get/presensi',       [KelasController::class, 'getPresensi']);
 Route::post('kelas/update/presensi',    [KelasController::class, 'setPresensi']);
+Route::post('kelas/siswa/presensi',     [KelasController::class, 'presensiSiswa']);
