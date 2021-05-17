@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use LaravelQRCode\Facades\QRCode;
 
 class KelasController extends Controller
 {
@@ -33,6 +34,10 @@ class KelasController extends Controller
                     'created_at'    => now()->setTimezone('Asia/Jakarta')->toDateTimeString()
                 ]
             );
+
+            QRCode::text($kelas->id)->setOutfile($kelas->id . '.png')->png();
+
+            Kelas::where('id', $kelas->id)->update(['qr_code' => secure_asset($kelas->id . '.png')]);
 
             $siswas = User::where('kelas', $kelas->user->kelas)
                 ->where('role', 2)
@@ -65,10 +70,14 @@ class KelasController extends Controller
             ->where('user_id', $request->user)
             ->first();
 
+        $total = Absensi::where('kelas_id', $request->id)
+            ->where('status', 0)
+            ->count();
+
         $statusKelas = '';
         $waktu = $kelas->tanggal . ' ' . $kelas->waktu;
 
-        if (Carbon::now()->setTimezone('Asia/Jakarta')->format('Y-m-d H:i:s') > $waktu) {
+        if (Carbon::now()->setTimezone('Asia/Jakarta')->subHours(2)->format('Y-m-d H:i:s') > $waktu) {
             $statusKelas = 1;
         } else {
             $statusKelas = 0;
@@ -80,13 +89,9 @@ class KelasController extends Controller
             $status = $status->status;
         }
 
-        $response = array('kelas' => $kelas, 'presensi' => $presensi, 'status' => $status, 'statusKelas' => $statusKelas);
+        $response = array('kelas' => $kelas, 'presensi' => $presensi, 'status' => $status, 'statusKelas' => $statusKelas, 'total' => $total);
 
         return response()->json($response);
-    }
-
-    public function update(Request $request)
-    {
     }
 
     public function status(Request $request)
@@ -134,8 +139,6 @@ class KelasController extends Controller
     {
         Kelas::where('id', $request->id)->delete();
 
-        $response = array('msg' => 'Sukses menghapus kelas');
-
-        return response()->json($response, 201);
+        return response()->json('Sukses', 201);
     }
 }
