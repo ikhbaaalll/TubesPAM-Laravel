@@ -21,6 +21,8 @@ class UserControler extends Controller
     {
         $user = User::where('id', $request->id)->first();
 
+        $siswa = User::where('kelas', $user->kelas)->count();
+
         $matematika = Kelas::where('pelajaran', "Matematika")
             ->where('kelas', $user->kelas)
             ->get()
@@ -130,6 +132,7 @@ class UserControler extends Controller
 
         $response = array(
             'user' => $user,
+            'siswa' => $siswa,
 
             'presensiMatematika' => $presensiMatematika,
             'absenMatematika' => $totalMatematika - $presensiMatematika,
