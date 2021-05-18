@@ -62,6 +62,8 @@ class KelasController extends Controller
     {
         $kelas = Kelas::with('user')->where('id', $request->id)->first();
         $presensi = Absensi::with('user')->where('kelas_id', $request->id)->get();
+        $totalPresensi = Absensi::with('user')->where('kelas_id', $request->id)->count();
+        $totalHadir = Absensi::with('user')->where('kelas_id', $request->id)->where('status', 1)->count();
 
         $status = Absensi::where('kelas_id', $request->id)
             ->where('user_id', $request->user)
@@ -86,7 +88,15 @@ class KelasController extends Controller
             $status = $status->status;
         }
 
-        $response = array('kelas' => $kelas, 'presensi' => $presensi, 'status' => $status, 'statusKelas' => $statusKelas, 'total' => $total);
+        $response = array(
+            'kelas' => $kelas,
+            'presensi' => $presensi,
+            'status' => $status,
+            'statusKelas' => $statusKelas,
+            'total' => $total,
+            'totalPresensi' => $totalPresensi,
+            'totalHadir' => $totalHadir
+        );
 
         return response()->json($response);
     }
