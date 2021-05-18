@@ -221,11 +221,17 @@ class UserControler extends Controller
                 [
                     'nama'      => $request->nama,
                     'email'     => $request->email,
-                    'password'  => bcrypt($request->password),
                     'kelas'     => $request->kelas
                 ]
             );
             $error = null;
+            if ($request->password != '') {
+                User::where('id', $request->id)->update(
+                    [
+                        'password'      => bcrypt($request->password),
+                    ]
+                );
+            }
         }
 
         $response = array('error' => $error);
